@@ -78,6 +78,19 @@ export default {
     },
     methods: {
 
+      preventPasteStyle(){
+        let editableTextFields = document.querySelectorAll(".editableText")
+        editableTextFields.forEach((element) => {
+          element.addEventListener("paste", (e) => {
+            e.preventDefault()
+            let text = e.clipboardData.getData('text/plain')
+            document.execCommand('insertText', false, text)
+          })
+
+        });
+      },
+
+
         /**
         * ---> This method change language
         * @function {changeLanguage}
@@ -324,16 +337,9 @@ export default {
 
 
       document.addEventListener('DOMContentLoaded', () => {
+          this.setBackgroundColor();
+          this.preventPasteStyle();
 
-       let editableTextFields = document.querySelectorAll(".editableText")
-        editableTextFields.forEach((element) => {
-          element.addEventListener("paste", (e) => {
-            e.preventDefault()
-            let text = e.clipboardData.getData('text/plain')
-            document.execCommand('insertText', false, text)
-          })
-
-        });
       });
 
     }
